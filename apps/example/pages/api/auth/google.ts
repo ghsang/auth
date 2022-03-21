@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect';
 import Cookies from 'cookies';
-import { EncryptJWT, decodeJwt } from 'jose';
+import { EncryptJWT, decodeJwt, JWTPayload } from 'jose';
 
 
 function validateCsrfToken(
@@ -21,6 +21,16 @@ function validateCsrfToken(
   }
 }
 
+function validateJwt(payload: JWTPayload) {
+  if (payload.aud !== process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
+    throw Error('Unexpected audience.')
+  }
+
+  if (['accounts.google.com', 'https://accounts.google.com'].includes(payload.iss || '')) {
+    throw Error('Unexpected issuer.')
+  }
+}
+
 const handler = nc({
   onError: (err, _req, res: NextApiResponse) => {
     res.status(500).json({ message: err.toString() });
@@ -33,7 +43,9 @@ const handler = nc({
 
   validateCsrfToken(cookies.get("g_csrc_token"), req.body.g_csrc_token);
 
-  const claims = decodeJwt(req.body.credentials);
+  const claims = decodeJwt(req.body.credential);
+
+  validateJwt(claims)
 
   const jwe = await new EncryptJWT(claims)
     .encrypt(new TextEncoder().encode(process.env.JWE_PUBLIC_KEY || ''))
