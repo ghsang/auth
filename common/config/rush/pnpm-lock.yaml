@@ -14,6 +14,7 @@ importers:
       cookies: ~0.8.0
       eslint: 8.11.0
       eslint-config-next: 12.1.0
+      jose: ~4.6.0
       next: 12.1.0
       next-connect: ~0.12.2
       react: 17.0.2
@@ -22,6 +23,7 @@ importers:
     dependencies:
       '@ghsang/auth': link:../../lib/auth
       cookies: 0.8.0
+      jose: 4.6.0
       next: 12.1.0_react-dom@17.0.2+react@17.0.2
       next-connect: 0.12.2
       react: 17.0.2
@@ -1189,6 +1191,10 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
     dev: true
+
+  /jose/4.6.0:
+    resolution: {integrity: sha512-0hNAkhMBNi4soKSAX4zYOFV+aqJlEz/4j4fregvasJzEVtjDChvWqRjPvHwLqr5hx28Ayr6bsOs1Kuj87V0O8w==}
+    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
